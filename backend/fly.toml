@@ -1,0 +1,32 @@
+app = 'pricewatch-pedro'
+primary_region = 'gru'
+
+[build]
+
+[env]
+  TZ = 'America/Sao_Paulo'
+  PORT = '8080'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = false
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type = "requests"
+    hard_limit = 50
+    soft_limit = 20
+
+[[http_service.checks]]
+  interval = "30s"
+  timeout = "10s"
+  grace_period = "15s"
+  method = "GET"
+  path = "/health"
+
+[[vm]]
+  memory = '512mb'
+  cpus = 1
+  memory_mb = 512
